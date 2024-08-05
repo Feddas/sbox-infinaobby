@@ -264,6 +264,12 @@
           "EyePosition": "0,0,60",
           "JumpStrength": 400,
           "RunSpeed": 250,
+          "SkinRenderer": {
+            "_type": "component",
+            "component_id": "a66308b0-6ac2-4d95-a65a-e088acb45608",
+            "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e",
+            "component_type": "SkinnedModelRenderer"
+          },
           "WalkSpeed": 120
         }
       ],

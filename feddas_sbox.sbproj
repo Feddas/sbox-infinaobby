@@ -1,8 +1,8 @@
 {
-  "Title": "Feddas_Sbox",
+  "Title": "Feddas",
   "Type": "game",
-  "Org": "local",
-  "Ident": "feddas_sbox",
+  "Org": "feddas",
+  "Ident": "feddas",
   "Schema": 1,
   "IncludeSourceFiles": false,
   "Resources": null,
