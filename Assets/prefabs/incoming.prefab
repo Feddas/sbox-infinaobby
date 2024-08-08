@@ -1,0 +1,38 @@
+{
+  "RootObject": {
+    "__guid": "39d2b237-d2d4-4b28-b266-577eb3305bea",
+    "Flags": 0,
+    "Name": "incoming",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "84f34514-6186-466f-a2de-605fc1381935",
+        "BodyGroups": 18446744073709551615,
+        "Model": "models/dev/box.vmdl",
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Incoming",
+        "__guid": "702b3bd0-e769-4de5-8bc2-0645fdc09266"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "44c6233e-859a-480e-b8cd-2e7dffe364d3",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Scale": "40,40,50",
+        "Static": false
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

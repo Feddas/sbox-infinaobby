@@ -53,6 +53,7 @@ public sealed class Player : Component
 
 		if ( Controller.IsOnGround )
 		{
+			Animator.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.None;
 			Controller.Acceleration = 10f;
 			Controller.ApplyFriction( 5f );
 
@@ -65,6 +66,7 @@ public sealed class Player : Component
 		}
 		else
 		{
+			Animator.SpecialMove = Animator.DuckLevel == 1 ? CitizenAnimationHelper.SpecialMoveStyle.Roll : CitizenAnimationHelper.SpecialMoveStyle.None;
 			Controller.Acceleration = 5f;
 			Controller.Velocity += Scene.PhysicsWorld.Gravity * Time.Delta;
 		}
@@ -72,6 +74,11 @@ public sealed class Player : Component
 		Controller.Move();
 		Animator.IsGrounded = Controller.IsOnGround;
 		Animator.WithVelocity( Controller.Velocity );
+	}
+
+	public void Kill()
+	{
+		Animator.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Slide;
 	}
 
 	protected override void DrawGizmos()

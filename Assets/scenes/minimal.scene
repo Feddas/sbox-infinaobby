@@ -287,29 +287,64 @@
               "Static": false
             }
           ]
+        },
+        {
+          "__guid": "b80cd2a3-06fc-4cd0-bc0b-e044a140f25b",
+          "Flags": 0,
+          "Name": "DeathZone",
+          "Position": "-50,0,250",
+          "Scale": "1,10,10",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.BoxCollider",
+              "__guid": "085109ac-26cf-461e-8ea2-7d6786544d67",
+              "Center": "0,0,0",
+              "IsTrigger": true,
+              "Scale": "50,50,50",
+              "Static": false
+            },
+            {
+              "__type": "KillZone",
+              "__guid": "ecb3c8ba-565b-45ef-bb0b-31d86f058fac"
+            }
+          ]
         }
       ]
     },
     {
-      "__guid": "26aed1df-285f-4efb-8e30-fffaee3ca766",
+      "__guid": "ffc2bcc9-cab1-4300-b8d6-5f2f0750421b",
       "Flags": 0,
-      "Name": "Spawner",
-      "Position": "225,0,50",
-      "Scale": "1,8,2",
+      "Name": "Incoming",
       "Enabled": true,
-      "Components": [
+      "Children": [
         {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "3fb2cc0b-f045-4f9d-8f0d-0866b916707a",
-          "__enabled": false,
-          "BodyGroups": 18446744073709551615,
-          "Model": "models/dev/box.vmdl",
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "Spawner",
-          "__guid": "3c89ed83-e9bb-484e-85c5-60754a5160e6"
+          "__guid": "26aed1df-285f-4efb-8e30-fffaee3ca766",
+          "Flags": 0,
+          "Name": "SpawnZone",
+          "Position": "225,0,50",
+          "Scale": "1,8,2",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.ModelRenderer",
+              "__guid": "3fb2cc0b-f045-4f9d-8f0d-0866b916707a",
+              "__enabled": false,
+              "BodyGroups": 18446744073709551615,
+              "Model": "models/dev/box.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            },
+            {
+              "__type": "Spawner",
+              "__guid": "3c89ed83-e9bb-484e-85c5-60754a5160e6",
+              "IncomingPrefab": {
+                "_type": "gameobject",
+                "prefab": "prefabs/incoming.prefab"
+              },
+              "IsSpawning": true
+            }
+          ]
         }
       ]
     }
