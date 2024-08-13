@@ -72,6 +72,11 @@
             "component_type": "SkinnedModelRenderer"
           },
           "WalkSpeed": 120
+        },
+        {
+          "__type": "Scores",
+          "__guid": "59a91e4c-1077-43ba-9f0c-1d1de4de0b43",
+          "maxHeight": -3.4028235E+38
         }
       ],
       "Children": [
@@ -239,7 +244,7 @@
           "Flags": 0,
           "Name": "LeftWall",
           "Position": "0,225,100",
-          "Scale": "1,1,4",
+          "Scale": "1,1,10",
           "Enabled": true,
           "Components": [
             {
@@ -258,6 +263,16 @@
               "IsTrigger": false,
               "Scale": "50,50,50",
               "Static": false
+            },
+            {
+              "__type": "MatchPosition",
+              "__guid": "1a7a1003-8173-4f80-b04a-27535cb0bcba",
+              "Multiplier": "0,0,1",
+              "Smoothing": "0,0,0",
+              "Target": {
+                "_type": "gameobject",
+                "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e"
+              }
             }
           ]
         },
@@ -266,7 +281,7 @@
           "Flags": 0,
           "Name": "RightWall",
           "Position": "0,-225,100",
-          "Scale": "1,1,4",
+          "Scale": "1,1,10",
           "Enabled": true,
           "Components": [
             {
@@ -285,28 +300,16 @@
               "IsTrigger": false,
               "Scale": "50,50,50",
               "Static": false
-            }
-          ]
-        },
-        {
-          "__guid": "b80cd2a3-06fc-4cd0-bc0b-e044a140f25b",
-          "Flags": 0,
-          "Name": "DeathZone",
-          "Position": "-50,0,250",
-          "Scale": "1,10,10",
-          "Enabled": true,
-          "Components": [
-            {
-              "__type": "Sandbox.BoxCollider",
-              "__guid": "085109ac-26cf-461e-8ea2-7d6786544d67",
-              "Center": "0,0,0",
-              "IsTrigger": true,
-              "Scale": "50,50,50",
-              "Static": false
             },
             {
-              "__type": "KillZone",
-              "__guid": "ecb3c8ba-565b-45ef-bb0b-31d86f058fac"
+              "__type": "MatchPosition",
+              "__guid": "e52a21a0-1ff8-4518-8f30-3af0bc03d037",
+              "Multiplier": "0,0,1",
+              "Smoothing": "0,0,0",
+              "Target": {
+                "_type": "gameobject",
+                "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e"
+              }
             }
           ]
         }
@@ -319,30 +322,54 @@
       "Enabled": true,
       "Children": [
         {
-          "__guid": "26aed1df-285f-4efb-8e30-fffaee3ca766",
+          "__guid": "1c3f10be-4166-4d52-9696-af2ed0211460",
           "Flags": 0,
-          "Name": "SpawnZone",
-          "Position": "225,0,50",
-          "Scale": "1,8,2",
+          "Name": "SpawnZonePivot",
           "Enabled": true,
           "Components": [
             {
-              "__type": "Sandbox.ModelRenderer",
-              "__guid": "3fb2cc0b-f045-4f9d-8f0d-0866b916707a",
-              "__enabled": false,
-              "BodyGroups": 18446744073709551615,
-              "Model": "models/dev/box.vmdl",
-              "RenderType": "On",
-              "Tint": "1,1,1,1"
-            },
-            {
-              "__type": "Spawner",
-              "__guid": "3c89ed83-e9bb-484e-85c5-60754a5160e6",
-              "IncomingPrefab": {
+              "__type": "MatchPosition",
+              "__guid": "eedfe222-a5ae-490a-bee6-da6551331571",
+              "Multiplier": "0,0,1",
+              "Smoothing": "0,0,0",
+              "Target": {
                 "_type": "gameobject",
-                "prefab": "prefabs/incoming.prefab"
-              },
-              "IsSpawning": true
+                "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e"
+              }
+            }
+          ],
+          "Children": [
+            {
+              "__guid": "26aed1df-285f-4efb-8e30-fffaee3ca766",
+              "Flags": 0,
+              "Name": "SpawnZone",
+              "Position": "225,0,50",
+              "Scale": "1,8,2",
+              "Enabled": true,
+              "Components": [
+                {
+                  "__type": "Sandbox.ModelRenderer",
+                  "__guid": "3fb2cc0b-f045-4f9d-8f0d-0866b916707a",
+                  "__enabled": false,
+                  "BodyGroups": 18446744073709551615,
+                  "Model": "models/dev/box.vmdl",
+                  "RenderType": "On",
+                  "Tint": "1,1,1,1"
+                },
+                {
+                  "__type": "Spawner",
+                  "__guid": "3c89ed83-e9bb-484e-85c5-60754a5160e6",
+                  "ContainerForIncoming": {
+                    "_type": "gameobject",
+                    "go": "ffc2bcc9-cab1-4300-b8d6-5f2f0750421b"
+                  },
+                  "IncomingPrefab": {
+                    "_type": "gameobject",
+                    "prefab": "prefabs/incoming.prefab"
+                  },
+                  "IsSpawning": true
+                }
+              ]
             }
           ]
         }

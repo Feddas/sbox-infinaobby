@@ -4,7 +4,12 @@ using System.Threading.Tasks;
 
 public sealed class Spawner : Component
 {
+	/// <summary> What to spawn </summary>
 	[Property] GameObject IncomingPrefab { get; set; }
+
+	/// <summary> Where to put it in the object hierarchy </summary>
+	[Property] GameObject ContainerForIncoming { get; set; }
+
 	[Property] bool IsSpawning { get; set; } = true;
 
 	// what number localscale is multiplied by. 50 matches a default box collider.
@@ -15,6 +20,11 @@ public sealed class Spawner : Component
 	protected override void OnStart()
 	{
 		base.OnStart();
+		if ( ContainerForIncoming == null )
+		{
+			ContainerForIncoming = this.GameObject.Parent;
+		}
+
 		spawnArea = BBox.FromPositionAndSize( this.Transform.Position, thickness * this.Transform.LocalScale );
 		spawnTask = spawnEvery( 2 );
 	}
@@ -35,7 +45,7 @@ public sealed class Spawner : Component
 		Gizmo.Draw.LineBBox( BBox.FromPositionAndSize( Vector3.Zero, thickness ) );
 	}
 
-	private async Task spawnEvery(float waitSeconds)
+	private async Task spawnEvery( float waitSeconds )
 	{
 		while ( IsSpawning )
 		{
@@ -53,6 +63,6 @@ public sealed class Spawner : Component
 	{
 		Assert.NotNull( IncomingPrefab ); // throw an error if wasn't defined
 
-		Incoming obsticale = IncomingPrefab.Clone(new Transform( spawnArea.RandomPointInside), this.GameObject.Parent ).Components.Get<Incoming>();
+		Incoming obsticale = IncomingPrefab.Clone( new Transform( spawnArea.RandomPointInside ), ContainerForIncoming ).Components.Get<Incoming>();
 	}
 }

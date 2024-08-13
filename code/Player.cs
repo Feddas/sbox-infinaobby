@@ -20,6 +20,8 @@ public sealed class Player : Component
 	/// <summary> Where the camera rotates around and aim originates from </summary>
 	[Property] public Vector3 EyePosition { get; set; }
 
+	[RequireComponent] private Health health { get; set; }
+
 	private Angles EyeAngles;
 	private Transform initialCamera;
 
@@ -27,6 +29,7 @@ public sealed class Player : Component
 	{
 		ClothingContainer.CreateFromLocalUser().Apply( SkinRenderer );
 		initialCamera = Camera.Transform.Local;
+		health.Animator = Animator;
 		// Log.Info( " initialCameraPitch " + initialCamera.Rotation.Pitch() );
 	}
 
@@ -72,6 +75,7 @@ public sealed class Player : Component
 		}
 
 		Controller.Move();
+		health.ShouldDie();
 		Animator.IsGrounded = Controller.IsOnGround;
 		Animator.WithVelocity( Controller.Velocity );
 	}
