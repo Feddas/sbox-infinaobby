@@ -3,17 +3,15 @@ using Sandbox;
 public sealed class Scores : Component
 {
 	/// <summary> The maximum z value the player has obtained. </summary>
-	[ReadOnly, Property] private float maxHeight = float.MinValue;
+	[ReadOnly, Property] public float MaxHeight { get; private set; } = float.MinValue;
 
 	[RequireComponent] private Health Health { get; set; }
 
 	protected override void OnUpdate()
 	{
-		if ( this.Transform.Position.z > maxHeight )
+		if ( this.Transform.Position.z > MaxHeight )
 		{
-			maxHeight = this.Transform.Position.z;
-
-			// TODO: update UI and leaderboard
+			MaxHeight = this.Transform.Position.z;
 		}
 	}
 
@@ -31,6 +29,6 @@ public sealed class Scores : Component
 
 	private void CanDie_OnDeath()
 	{
-		maxHeight = float.MinValue;
+		MaxHeight = float.MinValue;
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "__guid": "fdefc811-9270-4f28-a683-f9be2c00d419",
+  "__guid": "7f2a0255-2ce3-4776-b71a-dd36891762f1",
   "GameObjects": [
     {
       "__guid": "aebef23a-0d2f-405a-86b4-bbbc512e764e",
@@ -76,7 +76,12 @@
         {
           "__type": "Scores",
           "__guid": "59a91e4c-1077-43ba-9f0c-1d1de4de0b43",
-          "maxHeight": -3.4028235E+38
+          "MaxHeight": -3.4028235E+38
+        },
+        {
+          "__type": "Health",
+          "__guid": "4066e585-7564-4c42-bfcc-5cc1cf679b5f",
+          "minXValue": -25
         }
       ],
       "Children": [
@@ -372,6 +377,33 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      "__guid": "82b77438-9d55-4398-bcdb-eed310b7c65a",
+      "Flags": 0,
+      "Name": "UiScreen",
+      "Position": "51.58104,73.29507,134.2177",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "31cdb86e-05f3-42e9-8f9b-c9f5279461b1",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
+        },
+        {
+          "__type": "UiHud",
+          "__guid": "0e52108d-c2fb-42c3-9342-3dab676eb1d9",
+          "scorer": {
+            "_type": "component",
+            "component_id": "59a91e4c-1077-43ba-9f0c-1d1de4de0b43",
+            "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e",
+            "component_type": "Scores"
+          }
         }
       ]
     }
