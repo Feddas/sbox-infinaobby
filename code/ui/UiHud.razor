@@ -3,19 +3,20 @@
 @inherits PanelComponent
 
 <root>
-	<!-- Copied from https://www.youtube.com/watch?v=4J37tgZ1Qmo&list=PLEN7Jv6asIPpQ5H441YAGiXh7hLTNzcDz&index=3 -->
+	<!-- 📐 Copied from https://www.youtube.com/watch?v=4J37tgZ1Qmo&list=PLEN7Jv6asIPpQ5H441YAGiXh7hLTNzcDz&index=3 -->
 	<div class="vitals">
-		📐🔝
-		@scorer.MaxHeight.ToString("F2")
+		<p>🔝@scorer.MaxHeight.ToString("F2")</p>
+		<p>⚡@spawner.ObstacleSpeed</p>
 	</div>
 </root>
 
 @code
 {
 	[Property] Scores scorer { get; set; }
+	[Property] Spawner spawner { get; set; }
 
 	/// <summary>
 	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
 	/// </summary>
-	protected override int BuildHash() => System.HashCode.Combine(scorer.MaxHeight);
+	protected override int BuildHash() => System.HashCode.Combine(scorer.MaxHeight, spawner.ObstacleSpeed);
 }

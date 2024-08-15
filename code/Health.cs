@@ -10,6 +10,9 @@ public sealed class Health : Component
 	/// <summary> If the gameobject's x value is less, kill the object </summary>
 	[Property, Range( -400, 400, 25 )] public float minXValue { get; set; } = -25f;
 
+	/// <summary> Height of lowest current cube. Kills the player if they fall off the cube. </summary>
+	[Property] public PlatformFinished platforms { get; set; }
+
 	public CitizenAnimationHelper Animator { get; set; }
 
 	private Transform startPostion;
@@ -25,7 +28,7 @@ public sealed class Health : Component
 	public void ShouldDie()
 	{
 		// if hasn't died, return
-		if ( this.Transform.Position.x >= minXValue )
+		if ( this.Transform.Position.x >= minXValue && this.Transform.Position.z >= platforms.MinZValue )
 		{
 			return;
 		}
@@ -36,6 +39,8 @@ public sealed class Health : Component
 		{
 			Animator.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Slide;
 		}
+
+		platforms.MinZValue = 0;
 
 		OnDeath?.Invoke();
 	}

@@ -81,7 +81,13 @@
         {
           "__type": "Health",
           "__guid": "4066e585-7564-4c42-bfcc-5cc1cf679b5f",
-          "minXValue": -25
+          "minXValue": -25,
+          "platforms": {
+            "_type": "component",
+            "component_id": "ff0012c7-250f-492a-b5a0-e6c6fdb4aa2c",
+            "go": "15eb8776-8484-41f3-bf36-d748178b7238",
+            "component_type": "PlatformFinished"
+          }
         }
       ],
       "Children": [
@@ -331,25 +337,13 @@
           "Flags": 0,
           "Name": "SpawnZonePivot",
           "Enabled": true,
-          "Components": [
-            {
-              "__type": "MatchPosition",
-              "__guid": "eedfe222-a5ae-490a-bee6-da6551331571",
-              "Multiplier": "0,0,1",
-              "Smoothing": "0,0,0",
-              "Target": {
-                "_type": "gameobject",
-                "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e"
-              }
-            }
-          ],
           "Children": [
             {
               "__guid": "26aed1df-285f-4efb-8e30-fffaee3ca766",
               "Flags": 0,
               "Name": "SpawnZone",
-              "Position": "225,0,50",
-              "Scale": "1,8,2",
+              "Position": "200,0,25",
+              "Scale": "1,8,1",
               "Enabled": true,
               "Components": [
                 {
@@ -372,9 +366,39 @@
                     "_type": "gameobject",
                     "prefab": "prefabs/incoming.prefab"
                   },
-                  "IsSpawning": true
+                  "IsSpawning": true,
+                  "ObstacleSpeed": 0,
+                  "PlayerLife": {
+                    "_type": "component",
+                    "component_id": "4066e585-7564-4c42-bfcc-5cc1cf679b5f",
+                    "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e",
+                    "component_type": "Health"
+                  }
                 }
               ]
+            }
+          ]
+        },
+        {
+          "__guid": "15eb8776-8484-41f3-bf36-d748178b7238",
+          "Flags": 0,
+          "Name": "Finished",
+          "Position": "-100,0,0",
+          "Scale": "1,8,8",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.BoxCollider",
+              "__guid": "ec1822fb-ea86-4bb7-9ab9-6e45c0b4f800",
+              "Center": "0,0,0",
+              "IsTrigger": true,
+              "Scale": "50,50,50",
+              "Static": false
+            },
+            {
+              "__type": "PlatformFinished",
+              "__guid": "ff0012c7-250f-492a-b5a0-e6c6fdb4aa2c",
+              "MinZValue": 0
             }
           ]
         }
@@ -403,6 +427,12 @@
             "component_id": "59a91e4c-1077-43ba-9f0c-1d1de4de0b43",
             "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e",
             "component_type": "Scores"
+          },
+          "spawner": {
+            "_type": "component",
+            "component_id": "3c89ed83-e9bb-484e-85c5-60754a5160e6",
+            "go": "26aed1df-285f-4efb-8e30-fffaee3ca766",
+            "component_type": "Spawner"
           }
         }
       ]

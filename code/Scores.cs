@@ -12,6 +12,8 @@ public sealed class Scores : Component
 		if ( this.Transform.Position.z > MaxHeight )
 		{
 			MaxHeight = this.Transform.Position.z;
+
+			// TODO: update leaderboard
 		}
 	}
 
