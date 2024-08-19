@@ -1,13 +1,14 @@
 {
-  "Title": "Feddas",
+  "Title": "Infina-Obby",
   "Type": "game",
   "Org": "feddas",
-  "Ident": "feddas",
+  "Ident": "infinaobby",
   "Schema": 1,
   "IncludeSourceFiles": false,
   "Resources": null,
   "PackageReferences": [],
   "EditorReferences": null,
+  "IsWhitelistDisabled": false,
   "Metadata": {
     "MaxPlayers": 64,
     "MinPlayers": 1,

@@ -7,7 +7,6 @@
 	<div class="vitals">
 		<p>🔝@scorer.MaxScore.ToString("F2")</p><!-- best score overall -->
 		<p>📐@scorer.MaxHeight.ToString("F2")</p><!-- best score this run -->
-		<p>⚡@spawner.ObstacleSpeed.ToString("F1")</p><!-- platform speed -->
 	</div>
 	<div class="instructions">
 		<p>@scorer.Instructions</p>
@@ -17,10 +16,9 @@
 @code
 {
 	[Property] Scores scorer { get; set; }
-	[Property] Spawner spawner { get; set; }
 
 	/// <summary>
 	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
 	/// </summary>
-	protected override int BuildHash() => System.HashCode.Combine(scorer.MaxHeight, spawner.ObstacleSpeed, scorer.Instructions);
+	protected override int BuildHash() => System.HashCode.Combine(scorer.MaxHeight, scorer.Instructions);
 }

@@ -76,7 +76,8 @@
         {
           "__type": "Scores",
           "__guid": "59a91e4c-1077-43ba-9f0c-1d1de4de0b43",
-          "MaxHeight": -3.4028235E+38
+          "MaxHeight": -3.4028235E+38,
+          "MaxScore": -3.4028235E+38
         },
         {
           "__type": "Health",
@@ -228,7 +229,7 @@
           "__guid": "6ad70641-3c6c-4402-9c85-9a4969af4764",
           "Flags": 0,
           "Name": "Plane",
-          "Scale": "8,5,5",
+          "Scale": "0.2,5,5",
           "Enabled": true,
           "Components": [
             {
@@ -243,6 +244,33 @@
             {
               "__type": "Sandbox.BoxCollider",
               "__guid": "0715cb55-1733-4f5e-8560-c288b8695631",
+              "Center": "0,0,-5",
+              "IsTrigger": false,
+              "Scale": "100,100,10",
+              "Static": false
+            }
+          ]
+        },
+        {
+          "__guid": "b55bfa98-e9d8-43fe-8067-82f450405e77",
+          "Flags": 0,
+          "Name": "Lava",
+          "Position": "0,0,-1",
+          "Scale": "8,5,5",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.ModelRenderer",
+              "__guid": "9f7350b0-2df5-4b12-83eb-b9c30bbc3818",
+              "BodyGroups": 18446744073709551615,
+              "MaterialOverride": "materials/default.vmat",
+              "Model": "models/dev/plane.vmdl",
+              "RenderType": "On",
+              "Tint": "0.81569,0,0,1"
+            },
+            {
+              "__type": "Sandbox.BoxCollider",
+              "__guid": "e48c0d75-5a78-4665-9033-a526ee4f9eee",
               "Center": "0,0,-5",
               "IsTrigger": false,
               "Scale": "100,100,10",
@@ -427,12 +455,6 @@
             "component_id": "59a91e4c-1077-43ba-9f0c-1d1de4de0b43",
             "go": "aebef23a-0d2f-405a-86b4-bbbc512e764e",
             "component_type": "Scores"
-          },
-          "spawner": {
-            "_type": "component",
-            "component_id": "3c89ed83-e9bb-484e-85c5-60754a5160e6",
-            "go": "26aed1df-285f-4efb-8e30-fffaee3ca766",
-            "component_type": "Spawner"
           }
         }
       ]
