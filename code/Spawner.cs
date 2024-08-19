@@ -2,6 +2,7 @@ using Sandbox;
 using Sandbox.Diagnostics;
 using System;
 using System.Threading.Tasks;
+using Rng = Sandbox.SeedRandom;
 
 public sealed class Spawner : Component
 {
@@ -23,7 +24,6 @@ public sealed class Spawner : Component
 	private Task spawnTask;
 	private BBox spawnArea;
 
-	private Random rand;
 	private Vector3 lastSpawnStart;
 
 	protected override void OnStart()
@@ -35,6 +35,7 @@ public sealed class Spawner : Component
 		}
 
 		// setup first obstacle
+		Rng.Initialize( 42 + 1 );
 		resetSpawner();
 	}
 
@@ -52,10 +53,13 @@ public sealed class Spawner : Component
 
 	private async void OnPlayerDied()
 	{
-		Log.Info( $"{this.GameObject.Name} knows that player died" );
 		IsSpawning = false;
 		await spawnTask; //spawnTask.Dispose();
-		Log.Info( $"{this.GameObject.Name} finished spawning due to player died" );
+		if ( false == spawnTask.IsCompleted )
+		{
+			return; // This should never happen... but it does. I need breakpoints to understand why. :(
+		}
+		Log.Info( $"{this.GameObject.Name} finished spawning due to player died. completed? {spawnTask.IsCompleted}" );
 		var toDelete = ContainerForIncoming.Children.Where( c => c.Components.Get<Incoming>() != null );
 		foreach ( var c in toDelete )
 		{
@@ -85,21 +89,26 @@ public sealed class Spawner : Component
 	private void resetSpawner()
 	{
 		// TODO: change Random seed to change based on the UTC day of the year.
-		rand = new Random( 42 + 1 );
+		Rng.Reset();
 		ObstacleSpeed = 3;
 		spawnArea = BBox.FromPositionAndSize( this.Transform.Position, thickness * this.Transform.LocalScale );
-		lastSpawnStart = rand.VectorInCube( spawnArea );
+		lastSpawnStart = Rng.VectorInCube( spawnArea );
 		spawnTask = spawnEvery( 1.5f );
 	}
 
 	private async Task spawnEvery( float waitSeconds )
 	{
+		float slowestSpeed = ObstacleSpeed;
 		while ( IsSpawning )
 		{
+			Log.Info( $"using {waitSeconds} at {Time.Now}" );
 			// wait for this amount of seconds
 			await Task.DelaySeconds( waitSeconds );
 
 			spawnIncoming();
+
+			// frequency of platforms is directly related to ObstacleSpeed
+			waitSeconds = Remap( ObstacleSpeed, 1, slowestSpeed, 1.2f, 1.6f ); // 1.2 = fastest platforms will come, 1.6 slowest platforms will come.
 		}
 	}
 
@@ -113,31 +122,28 @@ public sealed class Spawner : Component
 		// create
 		Incoming obstacle = IncomingPrefab.Clone( new Transform( lastSpawnStart ), ContainerForIncoming ).Components.Get<Incoming>();
 		obstacle.SecondsToTraverse = ObstacleSpeed;
-		obstacle.Color = RandomColor();
+		obstacle.Color = Rng.RandomColor();
 
 		// setup next
-		//ObstacleSpeed-=.5f;
+		ObstacleSpeed-=.5f;
+		if ( ObstacleSpeed < 1)
+		{
+			ObstacleSpeed = 1f;
+		}
 		float clampedY = lastSpawnStart.y.Clamp( -120, 120 );
-		int newYvalue = rand.Next( (int)(clampedY - thickness), (int)(clampedY + thickness) );
-		int newZvalue = (int)lastSpawnStart.z + rand.Next( 20, 50 );
+		int newYvalue = Rng.Next( (int)(clampedY - thickness), (int)(clampedY + thickness) );
+		int newZvalue = (int)lastSpawnStart.z + Rng.Next( 20, 50 );
 		lastSpawnStart = new Vector3( lastSpawnStart.x, newYvalue, newZvalue );
 
 		// TODO: delete all obstacles on death
 	}
 
-	public Color RandomColor()
+	/// <summary>
+	/// exponential varation of https://youtu.be/NzjF1pdlK7Y
+	/// </summary>
+	private float Remap( float input, float inMin, float inMax, float outMin, float outMax )
 	{
-		switch ( rand.Next( 6 ) )
-		{
-			case 0: return Color.White;
-			case 1: return Color.Red;
-			case 2: return Color.Green;
-			case 3: return Color.Blue;
-			case 4: return Color.Yellow;
-			case 5: return Color.Cyan;
-			case 6: return Color.Magenta;
-			default: return Color.Black;
-		}
+		float t = input.LerpInverse( inMin, inMax );
+		return outMin.LerpTo( outMax, (float)Math.Sqrt(t) );
 	}
-
 }

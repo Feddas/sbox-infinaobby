@@ -228,7 +228,7 @@
           "__guid": "6ad70641-3c6c-4402-9c85-9a4969af4764",
           "Flags": 0,
           "Name": "Plane",
-          "Scale": "5,5,5",
+          "Scale": "8,5,5",
           "Enabled": true,
           "Components": [
             {
@@ -342,8 +342,8 @@
               "__guid": "26aed1df-285f-4efb-8e30-fffaee3ca766",
               "Flags": 0,
               "Name": "SpawnZone",
-              "Position": "200,0,25",
-              "Scale": "1,8,1",
+              "Position": "400,0,5",
+              "Scale": "0.2,8,0.2",
               "Enabled": true,
               "Components": [
                 {
