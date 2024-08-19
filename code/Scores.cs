@@ -13,6 +13,7 @@ public sealed class Scores : Component
 
 	protected override void OnStart()
 	{
+		MaxScore = (float)Sandbox.Services.Stats.GetLocalPlayerStats( "infinaobby" ).Get( "score" ).Value;
 		_ = RemoveInstructions( 1600 );
 	}
 
@@ -26,7 +27,7 @@ public sealed class Scores : Component
 		{
 			await Task.DelaySeconds( .02f );
 
-			Instructions = Instructions.Remove(0, 1);
+			Instructions = Instructions.Remove( 0, 1 );
 		}
 		Instructions = " ";
 	}
@@ -40,9 +41,11 @@ public sealed class Scores : Component
 			if ( MaxHeight > MaxScore )
 			{
 				MaxScore = MaxHeight;
+
+				// update leaderboard
+				Sandbox.Services.Stats.SetValue( "score_num" + DaysSince.ReleaseDate, MaxScore );
 			}
 
-			// TODO: update leaderboard
 		}
 	}
 

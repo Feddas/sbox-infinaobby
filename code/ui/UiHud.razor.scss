@@ -28,4 +28,11 @@ UiHud {
         justify-content: center;
         align-items: center;
     }
+
+    UiLeaderboard {
+        position: absolute;
+        bottom: 32px;
+        right: 32px;
+        width: 300px;
+    }
 }

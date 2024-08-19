@@ -1,0 +1,57 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	@if (Leaderboard is null) return;
+	@if (Leaderboard.Entries.Count() <= 1) return;
+	<label class="header">Leaderboard</label>
+	<div class="entries">
+		@if (true)
+		{
+			var offset = 0;
+			@foreach (var entry in Leaderboard.Entries)
+			{
+				@if (entry.Value <= 15 * 60)
+				{
+					offset++;
+					continue;
+				}
+				<div class="entry">
+					<label class="rank">##@(entry.Rank - offset)</label>
+					<label class="name">@entry.DisplayName</label>
+					<label class="value">@entry.FormattedValue</label>
+				</div>
+			}
+		}
+	</div>
+</root>
+
+@code
+{
+	// copy pasted from a mix of
+	// Carson1 https://github.com/Facepunch/sbox-ss1-scene/commit/117e11b919d38c1df1a98d3863e100000adafaad
+	// Carson2 https://github.com/Facepunch/sbox-battlebugs/blob/08b7b2b42013c9b24c0ba3f0c2f0a8d3aae1d039/code/UI/Panels/StatsPanel.razor#L47
+	// & gary https://github.com/Facepunch/sbox-2dtest/commit/56ab61019360ce1fcfde8475e0537ad5f11d537b
+	// not others https://github.com/search?q=org%3AFacepunch+leaderboard&type=commits
+	Sandbox.Services.Leaderboards.Board Leaderboard;
+
+	protected override void OnAfterTreeRender(bool firstTime)
+	{
+		base.OnAfterTreeRender(firstTime);
+
+		if (firstTime)
+		{
+			Leaderboard = Sandbox.Services.Leaderboards.Get("victory_time");
+			Refresh();
+		}
+	}
+
+	async void Refresh()
+	{
+		Leaderboard.MaxEntries = 50;
+		await Leaderboard.Refresh();
+		StateHasChanged();
+	}
+}
