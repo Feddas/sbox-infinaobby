@@ -25,7 +25,7 @@ public sealed class Health : Component
 	}
 
 	/// <summary> Checks if health should be changed to a death state. </summary>
-	public void ShouldDie()
+	public async void ShouldDie()
 	{
 		// if hasn't died, return
 		if ( this.Transform.Position.x >= minXValue && this.Transform.Position.z >= platforms.MinZValue )
@@ -41,6 +41,10 @@ public sealed class Health : Component
 		}
 
 		platforms.MinZValue = 0;
+
+		// wait 2 frames for teleport to finish
+		await Task.Frame();
+		await Task.Frame();
 
 		OnDeath?.Invoke();
 	}

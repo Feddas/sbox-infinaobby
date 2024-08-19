@@ -4,6 +4,11 @@ using System;
 using System.Threading.Tasks;
 using Rng = Sandbox.SeedRandom;
 
+
+/// <summary>
+/// Spawns gradually higher platforms the move increasingly faster
+/// TODO: Redo class to generate based on player controller's air time in seconds and max height of jump. This will allow only generating do-able jumps.
+/// </summary>
 public sealed class Spawner : Component
 {
 	/// <summary> Current obstacle speed </summary>
@@ -35,7 +40,7 @@ public sealed class Spawner : Component
 		}
 
 		// setup first obstacle
-		Rng.Initialize( 42 + 1 );
+		Rng.Initialize( 42 + 1 ); // DaysSince.Release();
 		resetSpawner();
 	}
 
@@ -101,7 +106,7 @@ public sealed class Spawner : Component
 		float slowestSpeed = ObstacleSpeed;
 		while ( IsSpawning )
 		{
-			Log.Info( $"using {waitSeconds} at {Time.Now}" );
+			//Log.Info( $"using {waitSeconds} at {Time.Now}" );
 			// wait for this amount of seconds
 			await Task.DelaySeconds( waitSeconds );
 
@@ -125,7 +130,7 @@ public sealed class Spawner : Component
 		obstacle.Color = Rng.RandomColor();
 
 		// setup next
-		ObstacleSpeed-=.5f;
+		ObstacleSpeed-=.2f;
 		if ( ObstacleSpeed < 1)
 		{
 			ObstacleSpeed = 1f;

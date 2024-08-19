@@ -1,4 +1,5 @@
 using Sandbox;
+using System.Threading.Tasks;
 
 public sealed class Scores : Component
 {
@@ -7,6 +8,28 @@ public sealed class Scores : Component
 	[ReadOnly, Property] public float MaxScore { get; private set; } = float.MinValue;
 
 	[RequireComponent] private Health Health { get; set; }
+
+	public string Instructions { get; private set; } = "Use cubes to jump higher than anyone else on the leaderboards.";
+
+	protected override void OnStart()
+	{
+		_ = RemoveInstructions( 1600 );
+	}
+
+	private async Task RemoveInstructions( float waitSeconds )
+	{
+		await Task.Frame(); // needed for Time.Now to be set to something other than 0, so DelaySeconds will work
+
+		Instructions = "Use cubes to jump higher than anyone else on the leaderboards.";
+		await Task.DelaySeconds( 4f );
+		while ( Instructions.Length > 1 )
+		{
+			await Task.DelaySeconds( .02f );
+
+			Instructions = Instructions.Remove(0, 1);
+		}
+		Instructions = " ";
+	}
 
 	protected override void OnUpdate()
 	{

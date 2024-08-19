@@ -17,4 +17,15 @@ UiHud {
         color: white;
         flex-direction: column;
     }
+
+    > .instructions {
+        margin: 90px;
+        font-size: 64px;
+        font-weight: bold;
+        text-stroke: 8px black;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
