@@ -4,23 +4,29 @@
 @attribute [StyleSheet]
 
 <root>
-	@if (Leaderboard is null) return;
-	@if (Leaderboard.Entries.Count() <= 1) return;
+	@if (Leaderboard is null)
+	{
+		Log.Info("Leaderboard was null");
+		return;
+	}
+	else if (Leaderboard.Entries.Count() < 1)
+	{
+		Log.Info("Leaderboard count was less than 1");
+		return;
+	}
+	else
+	{
+		Log.Info("Leaderboard count had " + Leaderboard.Entries.Count());
+	}
 	<label class="header">Leaderboard</label>
 	<div class="entries">
 		@if (true)
 		{
-			var offset = 0;
 			@foreach (var entry in Leaderboard.Entries)
 			{
-				@if (entry.Value <= 15 * 60)
-				{
-					offset++;
-					continue;
-				}
 				<div class="entry">
-					<label class="rank">##@(entry.Rank - offset)</label>
-					<label class="name">@entry.DisplayName</label>
+					<label class="rank">##@entry.Rank</label>
+					<label class="name">@entry.DisplayName.Substring(0, System.Math.Min(entry.DisplayName.Length, 11))</label>
 					<label class="value">@entry.FormattedValue</label>
 				</div>
 			}
@@ -43,14 +49,14 @@
 
 		if (firstTime)
 		{
-			Leaderboard = Sandbox.Services.Leaderboards.Get("victory_time");
+			Leaderboard = Sandbox.Services.Leaderboards.Get("height_max");
 			Refresh();
 		}
 	}
 
 	async void Refresh()
 	{
-		Leaderboard.MaxEntries = 50;
+		Leaderboard.MaxEntries = 20;
 		await Leaderboard.Refresh();
 		StateHasChanged();
 	}
