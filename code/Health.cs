@@ -8,51 +8,33 @@ public sealed class Health : Component
 	public event Action OnDeath;
 
 	/// <summary> If the gameobject's x value is less, kill the object </summary>
-	[Property, Range( -400, 400, 25 )] public float minXValue { get; set; } = -25f;
+	[Property, Range( -400, 400 ), Step( 25 )] public float minXValue { get; set; } = -25f;
 
 	/// <summary> Height of lowest current cube. Kills the player if they fall off the cube. </summary>
 	[Property] public PlatformFinished platforms { get; set; }
 
-	public CitizenAnimationHelper Animator { get; set; }
-
-	private Transform startPostion;
-
-	protected override void OnStart()
-	{
-		startPostion.Position = this.Transform.LocalPosition;
-		startPostion.Rotation = this.Transform.LocalRotation;
-		startPostion.Scale = this.Transform.LocalScale;
-	}
-
 	/// <summary> Checks if health should be changed to a death state. </summary>
-	public async void ShouldDie()
+	public async void ShouldDie( Action teleportHome )
 	{
 		// if hasn't died, return
-		if ( this.Transform.Position.x >= minXValue && this.Transform.Position.z >= platforms.MinZValue )
+		if ( this.WorldPosition.x >= minXValue && this.WorldPosition.z >= platforms.MinZValue )
 		{
 			return;
 		}
 
 		// else, do death
+		string deathReason = WorldPosition.x < minXValue
+			? $"Pushed {WorldPosition.x.ToString( "F2" )} < {minXValue}"
+			: $"Fell {WorldPosition.z.ToString( "F2" )} < {platforms.MinZValue.ToString( "F2" )}";
+		Log.Info( $"Player DIED. {deathReason}" );
 		teleportHome();
-		if ( this.Animator != null )
-		{
-			Animator.SpecialMove = CitizenAnimationHelper.SpecialMoveStyle.Slide;
-		}
 
-		platforms.MinZValue = 0;
+		platforms.MinZValue = -10; // -10 to account for jumping causing players Z position to go beneath 0.
 
 		// wait 2 frames for teleport to finish
 		await Task.Frame();
 		await Task.Frame();
 
 		OnDeath?.Invoke();
-	}
-
-	private void teleportHome()
-	{
-		this.Transform.LocalPosition = startPostion.Position;
-		this.Transform.LocalRotation = startPostion.Rotation;
-		this.Transform.LocalScale = startPostion.Scale;
 	}
 }

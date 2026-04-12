@@ -42,9 +42,9 @@ public sealed class Scores : Component
 
 	protected override void OnUpdate()
 	{
-		if ( this.Transform.Position.z > MaxHeight )
+		if ( this.WorldPosition.z > MaxHeight )
 		{
-			MaxHeight = this.Transform.Position.z;
+			MaxHeight = this.WorldPosition.z;
 
 			if ( MaxHeight > MaxScore )
 			{
@@ -52,7 +52,7 @@ public sealed class Scores : Component
 
 				// update leaderboard
 				Sandbox.Services.Stats.SetValue( keyScore, MaxScore );
-				Log.Info( "set stats MaxScore to " + MaxScore );
+				//Log.Info( "set stats MaxScore to " + MaxScore );
 				//DebugOverlay.Text( WorldPosition + Vector3.Up * 80f, MaxScore.ToString() );
 
 				// update achievements that are height-score based

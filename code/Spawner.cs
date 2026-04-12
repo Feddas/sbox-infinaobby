@@ -4,25 +4,24 @@ using System;
 using System.Threading.Tasks;
 using Rng = Sandbox.SeedRandom;
 
-
 /// <summary>
 /// Spawns gradually higher platforms the move increasingly faster
 /// TODO: Redo class to generate based on player controller's air time in seconds and max height of jump. This will allow only generating do-able jumps.
 /// </summary>
 public sealed class Spawner : Component
 {
-	/// <summary> Current obstacle speed </summary>
-	[ReadOnly, Property] public float ObstacleSpeed { get; private set; }
-
 	/// <summary> What to spawn </summary>
-	[Property] GameObject IncomingPrefab { get; set; }
+	[Property, Category( "Components" )] GameObject IncomingPrefab { get; set; }
 
 	/// <summary> Where to put it in the object hierarchy </summary>
-	[Property] GameObject ContainerForIncoming { get; set; }
+	[Property, Category( "Components" )] GameObject ContainerForIncoming { get; set; }
 
-	[Property] bool IsSpawning { get; set; } = true;
+	[Property, Category( "Components" )] Health PlayerLife { get; set; }
 
-	[Property] Health PlayerLife { get; set; }
+	/// <summary> Current obstacle speed </summary>
+	[ReadOnly, Property, Category( "Debug" )] public float ObstacleSpeed { get; private set; }
+
+	[Property, Category( "Debug" )] bool IsSpawning { get; set; } = true;
 
 	// what number localscale is multiplied by. 50 matches a default box collider.
 	private float thickness = 50;
@@ -40,6 +39,7 @@ public sealed class Spawner : Component
 		}
 
 		// setup first obstacle
+		// TODO: change Random seed to change based on the UTC day of the year.
 		Rng.Initialize( 42 + 1 ); // DaysSince.Release();
 		resetSpawner();
 	}
@@ -64,7 +64,7 @@ public sealed class Spawner : Component
 		{
 			return; // This should never happen... but it does. I need breakpoints to understand why. :(
 		}
-		Log.Info( $"{this.GameObject.Name} finished spawning due to player died. completed? {spawnTask.IsCompleted}" );
+		//Log.Info( $"{this.GameObject.Name} finished spawning due to player died. completed? {spawnTask.IsCompleted}" );
 		var toDelete = ContainerForIncoming.Children.Where( c => c.Components.Get<Incoming>() != null );
 		foreach ( var c in toDelete )
 		{
@@ -93,10 +93,9 @@ public sealed class Spawner : Component
 
 	private void resetSpawner()
 	{
-		// TODO: change Random seed to change based on the UTC day of the year.
 		Rng.Reset();
-		ObstacleSpeed = 3;
-		spawnArea = BBox.FromPositionAndSize( this.Transform.Position, thickness * this.Transform.LocalScale );
+		ObstacleSpeed = 2;
+		spawnArea = BBox.FromPositionAndSize( this.WorldPosition, thickness * this.LocalScale );
 		lastSpawnStart = Rng.VectorInCube( spawnArea );
 		spawnTask = spawnEvery( 1.5f );
 	}
@@ -112,8 +111,11 @@ public sealed class Spawner : Component
 
 			spawnIncoming();
 
-			// frequency of platforms is directly related to ObstacleSpeed
-			waitSeconds = Remap( ObstacleSpeed, 1, slowestSpeed, 1.2f, 1.6f ); // 1.2 = fastest platforms will come, 1.6 slowest platforms will come.
+			// seconds until next platform is spawned
+			// frequency of platform spawning is directly related to ObstacleSpeed
+			waitSeconds = Remap( ObstacleSpeed, 1, slowestSpeed,
+				0.76f,   // platforms spawn more often to account for them moving faster
+				1.3f ); // platforms spawn less often to account for them moving slower
 		}
 	}
 
@@ -130,17 +132,15 @@ public sealed class Spawner : Component
 		obstacle.Color = Rng.RandomColor();
 
 		// setup next
-		ObstacleSpeed-=.2f;
-		if ( ObstacleSpeed < 1)
+		ObstacleSpeed *= .9f; // Every obstacle moves 10% faster
+		if ( ObstacleSpeed < 1 ) // 10% faster with a max speed traversing the entire distance in 1 second
 		{
 			ObstacleSpeed = 1f;
 		}
 		float clampedY = lastSpawnStart.y.Clamp( -120, 120 );
 		int newYvalue = Rng.Next( (int)(clampedY - thickness), (int)(clampedY + thickness) );
-		int newZvalue = (int)lastSpawnStart.z + Rng.Next( 20, 50 );
+		int newZvalue = (int)lastSpawnStart.z + Rng.Next( 15, 45 ); // how much height is incremented
 		lastSpawnStart = new Vector3( lastSpawnStart.x, newYvalue, newZvalue );
-
-		// TODO: delete all obstacles on death
 	}
 
 	/// <summary>
@@ -149,6 +149,6 @@ public sealed class Spawner : Component
 	private float Remap( float input, float inMin, float inMax, float outMin, float outMax )
 	{
 		float t = input.LerpInverse( inMin, inMax );
-		return outMin.LerpTo( outMax, (float)Math.Sqrt(t) );
+		return outMin.LerpTo( outMax, (float)Math.Sqrt( t ) );
 	}
 }
