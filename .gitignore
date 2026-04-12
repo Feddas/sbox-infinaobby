@@ -1,6 +1,7 @@
 
 # This file describes files and paths that should not be tracked by Git version control
 # https://git-scm.com/docs/gitignore
+# it copies https://github.com/Facepunch/sbox-scenestaging/blob/main/.gitignore
 
 # Auto-generated code editor files
 .vs/*
@@ -11,7 +12,6 @@ bin
 Properties/*
 code/obj/*
 code/Properties/*
-DontCommit*
 
 # Auto-generated asset related files
 *.generated.*
@@ -23,3 +23,11 @@ DontCommit*
 *.sln
 
 *idea
+/.sbox
+Code/testbed.csproj.user
+Libraries/*/.bin
+*.user
+*.slnx
+
+# Shawn custom
+DontCommit*
