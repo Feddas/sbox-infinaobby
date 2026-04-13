@@ -11,12 +11,16 @@ public sealed class PlatformFinished : Component, Component.ITriggerListener
 
 	void ITriggerListener.OnTriggerEnter( Collider other )
 	{
-		//Log.Info( $"{other.GameObject.Name} entered {this.GameObject.Name}" ); // Note: player doesn't have a collider on them. They never trigger this
+		//Log.Info( $"{other.GameObject.Name} entered {this.GameObject.Name}" );
 
-		// Disposed Incoming platform sets the MinZValue. If player is under MinZValue, they are killed.
+		// Do final tasks of the platform. platforms are the only objects that should contain <Incoming>
 		if ( other.Components.Get<Incoming>() != null )
 		{
+			// If player is under the MinZValue of the last disposed platform, they are killed.
 			MinZValue = other.WorldPosition.z;
+
+			// dispose of the platform
+			other.GameObject.Destroy();
 		}
 	}
 

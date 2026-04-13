@@ -8,21 +8,10 @@ public sealed class Incoming : Component
 		set { renderer.Tint = value; }
 	}
 
-	public float SecondsToTraverse
-	{
-		get { return secondsToTraverse; }
-		set
-		{
-			secondsToTraverse = value;
-			speed = distanceTraversed / secondsToTraverse;
-		}
-	}
-	private float secondsToTraverse = 4;
+	/// <summary> units this platform will traverse per second </summary>
+	public float Speed { get; set; }
 
 	[RequireComponent] private ModelRenderer renderer { get; set; }
-
-	private float speed;
-	private float distanceTraversed = 200;
 
 	protected override void OnStart()
 	{
@@ -31,10 +20,6 @@ public sealed class Incoming : Component
 
 	protected override void OnUpdate()
 	{
-		this.Transform.Position += Vector3.Backward * Time.Delta * speed;
-		if ( this.Transform.Position.x < 0 )
-		{
-			renderer.Tint = renderer.Tint.WithAlpha( 0.3f );
-		}
+		this.WorldPosition += Vector3.Backward * Time.Delta * Speed;
 	}
 }

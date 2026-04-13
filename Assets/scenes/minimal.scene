@@ -530,7 +530,7 @@
               "Name": "SpawnZone",
               "Position": "400,0,5",
               "Rotation": "0,0,0,1",
-              "Scale": "0.2,8,0.2",
+              "Scale": "0.2,6,0.2",
               "Tags": "",
               "Enabled": true,
               "NetworkMode": 2,
@@ -653,6 +653,24 @@
               "OnComponentFixedUpdate": null,
               "OnComponentStart": null,
               "OnComponentUpdate": null
+            },
+            {
+              "__type": "MatchPosition",
+              "__guid": "91e2c8da-40bf-4f67-8ce1-91cde231757d",
+              "__enabled": true,
+              "Flags": 0,
+              "Multiplier": "0,0,1",
+              "OnComponentDestroy": null,
+              "OnComponentDisabled": null,
+              "OnComponentEnabled": null,
+              "OnComponentFixedUpdate": null,
+              "OnComponentStart": null,
+              "OnComponentUpdate": null,
+              "Smoothing": "0,0,0",
+              "Target": {
+                "_type": "gameobject",
+                "go": "2ecf90bc-1f32-4442-b6bb-df744b47c48f"
+              }
             }
           ],
           "Children": []
@@ -894,9 +912,9 @@
             "component_type": "SkinnedModelRenderer"
           },
           "Clothing": [],
-          "ManualAge": 0.5,
-          "ManualHeight": 0.5,
-          "ManualTint": 0.5,
+          "ManualAge": 0,
+          "ManualHeight": 0,
+          "ManualTint": 0.24035609,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -971,7 +989,77 @@
               "UseAnimGraph": true
             }
           ],
-          "Children": []
+          "Children": [
+            {
+              "__guid": "a23089a8-d496-43fc-b3bc-4956b00e3e81",
+              "__version": 2,
+              "Flags": 0,
+              "Name": "Clothing - leotard_blue",
+              "Position": "0,0,0",
+              "Rotation": "0,0,0,1",
+              "Scale": "1,1,1",
+              "Tags": "clothing",
+              "Enabled": true,
+              "NetworkMode": 2,
+              "NetworkFlags": 0,
+              "NetworkOrphaned": 0,
+              "NetworkTransmit": true,
+              "OwnerTransfer": 1,
+              "Components": [
+                {
+                  "__type": "Sandbox.SkinnedModelRenderer",
+                  "__guid": "69a1d31c-dab3-4367-a476-87346265d20e",
+                  "__enabled": true,
+                  "Flags": 0,
+                  "AnimationGraph": null,
+                  "BodyGroups": 18446744073709551615,
+                  "BoneMergeTarget": {
+                    "_type": "component",
+                    "component_id": "3912aef9-241a-4d6c-bc0e-7d79b4708d2f",
+                    "go": "1af24292-f938-44fa-884c-e9a2a003d3ac",
+                    "component_type": "SkinnedModelRenderer"
+                  },
+                  "CreateAttachments": false,
+                  "CreateBoneObjects": false,
+                  "LodOverride": null,
+                  "MaterialGroup": null,
+                  "MaterialOverride": null,
+                  "Materials": null,
+                  "Model": "models/citizen_clothes/shirt/leotard/models/leotard_blue.vmdl",
+                  "Morphs": {},
+                  "OnComponentDestroy": null,
+                  "OnComponentDisabled": null,
+                  "OnComponentEnabled": null,
+                  "OnComponentFixedUpdate": null,
+                  "OnComponentStart": null,
+                  "OnComponentUpdate": null,
+                  "Parameters": {
+                    "bools": {},
+                    "ints": {},
+                    "floats": {},
+                    "vectors": {},
+                    "rotations": {}
+                  },
+                  "PlaybackRate": 1,
+                  "RenderOptions": {
+                    "GameLayer": true,
+                    "OverlayLayer": false,
+                    "BloomLayer": false,
+                    "AfterUILayer": false
+                  },
+                  "RenderType": "On",
+                  "Sequence": {
+                    "Name": null,
+                    "Looping": true,
+                    "Blending": false
+                  },
+                  "Tint": "1,1,1,1",
+                  "UseAnimGraph": true
+                }
+              ],
+              "Children": []
+            }
+          ]
         },
         {
           "__guid": "364126a9-f889-41cd-b2b4-31bbc17ebefe",
@@ -1193,7 +1281,7 @@
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
-          "$blob": "1ef4b87b-9cc5-48b9-b8c1-e3c43c103bb3"
+          "$blob": "e0d5f16c-14dd-4da6-8e7c-b7961d702b1d"
         }
       }
     }
