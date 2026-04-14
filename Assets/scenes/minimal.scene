@@ -1220,6 +1220,12 @@
               "OnComponentFixedUpdate": null,
               "OnComponentStart": null,
               "OnComponentUpdate": null,
+              "PlatformSpawner": {
+                "_type": "component",
+                "component_id": "3c89ed83-e9bb-484e-85c5-60754a5160e6",
+                "go": "26aed1df-285f-4efb-8e30-fffaee3ca766",
+                "component_type": "Spawner"
+              },
               "ScaleWishVelocity": "0,1,1"
             },
             {
@@ -1288,7 +1294,7 @@
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
-          "$blob": "810b2179-32e0-4e27-a964-d168aa8808d3"
+          "$blob": "f73d56a5-53ac-40b5-a8e3-418487b23209"
         }
       }
     }

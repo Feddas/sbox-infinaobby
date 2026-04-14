@@ -16,6 +16,9 @@ public sealed class Spawner : Component
 	// the full height delta of a jump. traversed starting at a surface to the apex of that jump.
 	private const float playerJumpHeight = 51f;
 
+	// invoked after spawned platforms to be destroyed
+	public event Action OnReset;
+
 	/// <summary> How often new platforms are spawned. Correlated with the players max jump distance in <seealso cref="spawnPlatforms"/>.
 	/// 50 is staring difficulty, 200 is speed of max difficulty </summary>
 	//[Property, Category( "Spawning" )]
@@ -138,9 +141,12 @@ public sealed class Spawner : Component
 
 	private void resetSpawner()
 	{
+		// reset
 		Rng.Reset();
 		secondThisRunStarted = Time.Now;
+		OnReset?.Invoke();
 
+		// start fresh wave
 		spawnTask = spawnPlatforms();
 	}
 

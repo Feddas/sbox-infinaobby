@@ -1,5 +1,6 @@
 using Sandbox;
 
+/// <summary> Restricts player movement to be along a line. </summary>
 public sealed class PlayerRestrict : Component
 {
 	[Property]
@@ -9,6 +10,11 @@ public sealed class PlayerRestrict : Component
 	[Property]
 	[Category( "Components" )]
 	public PlayerController Controller { get; set; }
+
+	/// <summary> Player input and enviroment interaction </summary>
+	[Property]
+	[Category( "Components" )]
+	public Spawner PlatformSpawner { get; set; }
 
 	[RequireComponent] private Health health { get; set; }
 	private Transform startPostion;
@@ -25,8 +31,20 @@ public sealed class PlayerRestrict : Component
 		var scaledWish = ScaleWishVelocity * Controller.WishVelocity;
 		Controller.WishVelocity = scaledWish; // modify WishVelocity as suggested on https://github.com/Facepunch/sbox-public/issues/2777
 
-		System.Action goHome = teleportHome;
-		health.ShouldDie( goHome );
+		// kill the player if they're not in the restricted area
+		health.ShouldDie(); // if this raises OnDeath, then PlatformSpawner.OnReset triggers teleportHome
+	}
+
+	protected override void OnEnabled()
+	{
+		base.OnEnabled();
+		PlatformSpawner.OnReset += teleportHome;
+	}
+
+	protected override void OnDisabled()
+	{
+		base.OnDisabled();
+		PlatformSpawner.OnReset -= teleportHome;
 	}
 
 	private void teleportHome()

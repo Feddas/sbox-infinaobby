@@ -31,7 +31,7 @@ public sealed class Health : Component
 	}
 
 	/// <summary> Checks if health should be changed to a death state. </summary>
-	public async void ShouldDie( Action teleportHome )
+	public async void ShouldDie()
 	{
 		// if hasn't died, return
 		if ( this.WorldPosition.x >= minXValue && this.WorldPosition.z >= platforms.MinZValue )
@@ -44,14 +44,9 @@ public sealed class Health : Component
 			? $"Pushed {WorldPosition.x.ToString( "F2" )} < {minXValue}"
 			: $"Fell {WorldPosition.z.ToString( "F2" )} < {platforms.MinZValue.ToString( "F2" )}";
 		Log.Info( $"Player DIED. {deathReason}" );
-		teleportHome();
 
+		// flag gameover, start reset
 		platforms.MinZValue = -10; // -10 to account for jumping causing players Z position to go beneath 0.
-
-		// wait 2 frames for teleport to finish
-		await Task.Frame();
-		await Task.Frame();
-
 		OnDeath?.Invoke();
 	}
 }
