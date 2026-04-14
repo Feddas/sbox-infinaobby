@@ -528,9 +528,9 @@
               "__version": 2,
               "Flags": 0,
               "Name": "SpawnZone",
-              "Position": "400,0,5",
+              "Position": "400,0,-20",
               "Rotation": "0,0,0,1",
-              "Scale": "0.2,6,0.2",
+              "Scale": "0.2,6,0.1",
               "Tags": "",
               "Enabled": true,
               "NetworkMode": 2,
@@ -991,7 +991,7 @@
           ],
           "Children": [
             {
-              "__guid": "a23089a8-d496-43fc-b3bc-4956b00e3e81",
+              "__guid": "a779bacf-c202-4faa-8684-63315a89a59e",
               "__version": 2,
               "Flags": 0,
               "Name": "Clothing - leotard_blue",
@@ -1008,7 +1008,7 @@
               "Components": [
                 {
                   "__type": "Sandbox.SkinnedModelRenderer",
-                  "__guid": "69a1d31c-dab3-4367-a476-87346265d20e",
+                  "__guid": "49c82f8e-f921-4a29-9855-0ad2c25c7c5a",
                   "__enabled": true,
                   "Flags": 0,
                   "AnimationGraph": null,
@@ -1281,7 +1281,7 @@
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
-          "$blob": "e0d5f16c-14dd-4da6-8e7c-b7961d702b1d"
+          "$blob": "02a1f6de-f4d5-4c39-9c98-308360947080"
         }
       }
     }

@@ -21,5 +21,11 @@ public sealed class Incoming : Component
 	protected override void OnUpdate()
 	{
 		this.WorldPosition += Vector3.Backward * Time.Delta * Speed;
+
+		// Show the platform is about to disappear (by running into gameobject Finished's PlatformFinished.cs collider.
+		if ( this.WorldPosition.x < 0 )
+		{
+			renderer.Tint = renderer.Tint.WithAlpha( 0.3f );
+		}
 	}
 }
