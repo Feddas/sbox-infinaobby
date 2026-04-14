@@ -5,12 +5,14 @@ public sealed class Scores : Component
 {
 	private readonly string keyScore = "score";// Don't use "score_num" + DaysSince.ReleaseDate;, instead (eventually when it works) use https://sbox.game/feddas/infinaobby/stats/leaderboards/help/api
 
-	/// <summary> The maximum z value the player has obtained. Shown to the player with Code/ui/UiHud.razor </summary>
-	[ReadOnly, Property] public float MaxHeight { get; private set; } = float.MinValue;
+	/// <summary> The maximum z value the player has obtained this game session. Shown to the player with Code/ui/UiHud.razor </summary>
 	[ReadOnly, Property] public float MaxScore { get; private set; } = float.MinValue;
 
+	/// <summary> The maxium z value the player has obtained since last dying.  </summary>
+	[ReadOnly, Property] public float MaxHeight { get; private set; } = float.MinValue;
+
 	// sbox require component: https://github.com/Facepunch/sbox-issues/issues/4659
-	[RequireComponent] private Health Health { get; set; }
+	[Property] private Spawner PlatformSpawner { get; set; }
 
 	/// <summary> This value is shown to the player with Code/ui/UiHud.razor </summary>
 	public string Instructions { get; private set; } = "Use cubes to jump higher than anyone else on the leaderboards.";
@@ -65,16 +67,16 @@ public sealed class Scores : Component
 	protected override void OnEnabled()
 	{
 		base.OnEnabled();
-		Health.OnDeath += CanDie_OnDeath;
+		PlatformSpawner.OnReset += OnReset;
 	}
 
 	protected override void OnDisabled()
 	{
 		base.OnDisabled();
-		Health.OnDeath -= CanDie_OnDeath;
+		PlatformSpawner.OnReset -= OnReset;
 	}
 
-	private void CanDie_OnDeath()
+	private void OnReset()
 	{
 		MaxHeight = float.MinValue;
 	}
