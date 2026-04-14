@@ -13,6 +13,23 @@ public sealed class Health : Component
 	/// <summary> Height of lowest current cube. Kills the player if they fall off the cube. </summary>
 	[Property] public PlatformFinished platforms { get; set; }
 
+	/// <summary> How close the player's WorldPosition is to dying from minXValue or MinZValue </summary>
+	[Property]
+	public int PositionHealth
+	{
+		get
+		{
+			if ( this.WorldPosition.z < platforms.MinZValue )
+			{
+				return 0;
+			}
+			else
+			{
+				return (int)(100 * MathX.LerpInverse( this.WorldPosition.x, minXValue, 0 ));
+			}
+		}
+	}
+
 	/// <summary> Checks if health should be changed to a death state. </summary>
 	public async void ShouldDie( Action teleportHome )
 	{

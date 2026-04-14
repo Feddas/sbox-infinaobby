@@ -29,6 +29,33 @@ UiHud {
         align-items: center;
     }
 
+    > .healthbar { // copied from https://youtu.be/4J37tgZ1Qmo
+        position: absolute;
+        bottom: 32px;
+        left: 32px;
+        width: 500px;
+        height: 64px;
+        background-color: rgb(42, 42, 42);
+        padding: 8px;
+        > .container {
+            background-color: black;
+            flex-grow: 1;
+            > .fill {
+                height: 100%;
+                background-color: red;
+            }
+            > p {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: white;
+                font-size: 24px;
+                font-weight: bold;
+            }
+        }
+    }
+
     UiLeaderboard {
         position: absolute;
         bottom: 32px;

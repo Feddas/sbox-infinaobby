@@ -716,6 +716,12 @@
           "__guid": "0e52108d-c2fb-42c3-9342-3dab676eb1d9",
           "__enabled": true,
           "Flags": 0,
+          "health": {
+            "_type": "component",
+            "component_id": "7827a657-8ba9-4eff-857a-e64b57599c52",
+            "go": "2ef4add5-e8cd-4478-a3a3-b91290fe39c7",
+            "component_type": "Health"
+          },
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
@@ -991,7 +997,7 @@
           ],
           "Children": [
             {
-              "__guid": "a779bacf-c202-4faa-8684-63315a89a59e",
+              "__guid": "e6b9b213-fc54-4e0b-b8a3-5a28f4d4b8b7",
               "__version": 2,
               "Flags": 0,
               "Name": "Clothing - leotard_blue",
@@ -1008,7 +1014,7 @@
               "Components": [
                 {
                   "__type": "Sandbox.SkinnedModelRenderer",
-                  "__guid": "49c82f8e-f921-4a29-9855-0ad2c25c7c5a",
+                  "__guid": "126739e4-9009-427b-acc5-1f4bc01d4647",
                   "__enabled": true,
                   "Flags": 0,
                   "AnimationGraph": null,
@@ -1233,7 +1239,8 @@
                 "component_id": "ff0012c7-250f-492a-b5a0-e6c6fdb4aa2c",
                 "go": "15eb8776-8484-41f3-bf36-d748178b7238",
                 "component_type": "PlatformFinished"
-              }
+              },
+              "PositionHealth": 100
             },
             {
               "__type": "Scores",
@@ -1281,7 +1288,7 @@
       },
       "Sandbox.Clutter.ClutterGridSystem": {
         "Storage": {
-          "$blob": "02a1f6de-f4d5-4c39-9c98-308360947080"
+          "$blob": "810b2179-32e0-4e27-a964-d168aa8808d3"
         }
       }
     }
