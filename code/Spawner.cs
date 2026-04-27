@@ -16,9 +16,6 @@ public sealed class Spawner : Component
 	// the full height delta of a jump. traversed starting at a surface to the apex of that jump.
 	private const float playerJumpHeight = 51f;
 
-	// invoked after spawned platforms to be destroyed
-	public event Action OnReset;
-
 	/// <summary> How often new platforms are spawned. Correlated with the players max jump distance in <seealso cref="spawnPlatforms"/>.
 	/// 50 is staring difficulty, 200 is speed of max difficulty </summary>
 	//[Property, Category( "Spawning" )]
@@ -47,8 +44,6 @@ public sealed class Spawner : Component
 
 	/// <summary> Where to put it in the object hierarchy </summary>
 	[Property, Category( "Components" )] GameObject ContainerForIncoming { get; set; }
-
-	[Property, Category( "Components" )] Health PlayerLife { get; set; }
 
 	/// <summary> Current obstacle speed </summary>
 	[ReadOnly, Property, Category( "Debug" )] public float ObstacleSpeed { get; private set; }
@@ -95,17 +90,18 @@ public sealed class Spawner : Component
 	protected override void OnEnabled()
 	{
 		base.OnEnabled();
-		PlayerLife.OnDeath += OnPlayerDied;
+		GameManager.Instance?.OnPlayerDied += OnPlayerDied;
 	}
 
 	protected override void OnDisabled()
 	{
 		base.OnDisabled();
-		PlayerLife.OnDeath -= OnPlayerDied;
+		GameManager.Instance?.OnPlayerDied -= OnPlayerDied;
 	}
 
 	private async void OnPlayerDied()
 	{
+		GameManager.Instance.ChangeState( GameManager.GameState.Reseting );
 		IsSpawning = false;
 		await spawnTask;
 		if ( false == spawnTask.IsCompleted )
@@ -144,7 +140,6 @@ public sealed class Spawner : Component
 		// reset
 		Rng.Reset();
 		secondThisRunStarted = Time.Now;
-		OnReset?.Invoke();
 
 		// start fresh wave
 		spawnTask = spawnPlatforms();
@@ -156,6 +151,10 @@ public sealed class Spawner : Component
 		ObstacleSpeed = frequencyOverSeconds.Evaluate( 0 );
 		Vector3 nextSpawnPosition = Rng.VectorInCube( spawnArea );
 		spawnIncomingAt( nextSpawnPosition );
+
+		// raise reset has completed
+		await Task.Frame();
+		GameManager.Instance.ChangeState( GameManager.GameState.Reset );
 
 		// continue spawn until player is killed
 		while ( IsSpawning )

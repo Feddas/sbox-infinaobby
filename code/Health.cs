@@ -5,8 +5,6 @@ using System;
 /// <summary> This object can die </summary>
 public sealed class Health : Component
 {
-	public event Action OnDeath;
-
 	/// <summary> If the gameobject's x value is less, kill the object </summary>
 	[Property, Range( -400, 400 ), Step( 25 )] public float minXValue { get; set; } = -25f;
 
@@ -46,7 +44,6 @@ public sealed class Health : Component
 		Log.Info( $"Player DIED. {deathReason}" );
 
 		// flag gameover, start reset
-		platforms.MinZValue = -10; // -10 to account for jumping causing players Z position to go beneath 0.
-		OnDeath?.Invoke();
+		GameManager.Instance.ChangeState( GameManager.GameState.PlayerDied );
 	}
 }

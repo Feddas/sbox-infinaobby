@@ -11,11 +11,6 @@ public sealed class PlayerRestrict : Component
 	[Category( "Components" )]
 	public PlayerController Controller { get; set; }
 
-	/// <summary> Player input and enviroment interaction </summary>
-	[Property]
-	[Category( "Components" )]
-	public Spawner PlatformSpawner { get; set; }
-
 	[RequireComponent] private Health health { get; set; }
 	private Transform startPostion;
 
@@ -28,6 +23,11 @@ public sealed class PlayerRestrict : Component
 
 	protected override void OnFixedUpdate()
 	{
+		if ( GameManager.Instance.CurrentState != GameManager.GameState.PlayerAlive )
+		{
+			return;
+		}
+
 		var scaledWish = ScaleWishVelocity * Controller.WishVelocity;
 		Controller.WishVelocity = scaledWish; // modify WishVelocity as suggested on https://github.com/Facepunch/sbox-public/issues/2777
 
@@ -38,19 +38,31 @@ public sealed class PlayerRestrict : Component
 	protected override void OnEnabled()
 	{
 		base.OnEnabled();
-		PlatformSpawner.OnReset += teleportHome;
+		GameManager.Instance?.OnReseting += OnReseting;
+		GameManager.Instance?.OnReset += teleportHome;
 	}
 
 	protected override void OnDisabled()
 	{
 		base.OnDisabled();
-		PlatformSpawner.OnReset -= teleportHome;
+		GameManager.Instance?.OnReseting -= OnReseting;
+		GameManager.Instance?.OnReset -= teleportHome;
+	}
+
+	private void OnReseting()
+	{
+		Controller.UseInputControls = false;
+		Controller.WishVelocity = 0; // Remove velocity from input.
 	}
 
 	private void teleportHome()
 	{
+		Controller.WishVelocity = 0; // If player died from a push, they may have continued to be pushed after OnReseting starting.
 		Controller.LocalPosition = startPostion.Position;
 		Controller.LocalRotation = startPostion.Rotation;
 		Controller.LocalScale = startPostion.Scale;
+		Controller.UseInputControls = true;
+
+		GameManager.Instance.ChangeState( GameManager.GameState.PlayerAlive );
 	}
 }

@@ -11,9 +11,6 @@ public sealed class Scores : Component
 	/// <summary> The maxium z value the player has obtained since last dying.  </summary>
 	[ReadOnly, Property] public float MaxHeight { get; private set; } = float.MinValue;
 
-	// sbox require component: https://github.com/Facepunch/sbox-issues/issues/4659
-	[Property] private Spawner PlatformSpawner { get; set; }
-
 	/// <summary> This value is shown to the player with Code/ui/UiHud.razor </summary>
 	public string Instructions { get; private set; } = "Use cubes to jump higher than anyone else on the leaderboards.";
 
@@ -67,16 +64,16 @@ public sealed class Scores : Component
 	protected override void OnEnabled()
 	{
 		base.OnEnabled();
-		PlatformSpawner.OnReset += OnReset;
+		GameManager.Instance?.OnReseting += OnReseting;
 	}
 
 	protected override void OnDisabled()
 	{
 		base.OnDisabled();
-		PlatformSpawner.OnReset -= OnReset;
+		GameManager.Instance?.OnReseting -= OnReseting;
 	}
 
-	private void OnReset()
+	private void OnReseting()
 	{
 		MaxHeight = float.MinValue;
 	}
