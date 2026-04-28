@@ -21,6 +21,12 @@ public sealed class PlayerRestrict : Component
 		startPostion.Scale = this.LocalScale;
 	}
 
+	//protected override void OnUpdate()
+	//{
+	//  // show x-velocity as UI over players head.
+	//	DebugOverlay.Text( WorldPosition + Vector3.Up * 80f, $"{Controller.Velocity.x.ToString("F0")}" );
+	//}
+
 	protected override void OnFixedUpdate()
 	{
 		if ( GameManager.Instance.CurrentState != GameManager.GameState.PlayerAlive )
@@ -29,6 +35,10 @@ public sealed class PlayerRestrict : Component
 		}
 
 		var scaledWish = ScaleWishVelocity * Controller.WishVelocity;
+		if ( WorldPosition.x < 0 ) // gravitate back towards centerline
+		{
+			scaledWish.x = 1; // 1 is how fast the player returns to the 0,0,0 line
+		}
 		Controller.WishVelocity = scaledWish; // modify WishVelocity as suggested on https://github.com/Facepunch/sbox-public/issues/2777
 
 		// kill the player if they're not in the restricted area

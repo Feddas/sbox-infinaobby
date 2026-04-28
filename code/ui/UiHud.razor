@@ -5,8 +5,8 @@
 <root>
 	<!-- 📐 Copied from https://www.youtube.com/watch?v=4J37tgZ1Qmo&list=PLEN7Jv6asIPpQ5H441YAGiXh7hLTNzcDz&index=3 -->
 	<div class="vitals">
-		<p>🔝@scorer.MaxScore.ToString("F2")</p><!-- best score overall -->
-		<p>📐@scorer.MaxHeight.ToString("F2")</p><!-- best score this run -->
+		<p>🔝@scorer.MaxSession.ToString("F2")</p><!-- best score overall -->
+		<p>📐@scorer.MaxThisRun.ToString("F2")</p><!-- best score this run -->
 	</div>
 
 	<div class="instructions">
@@ -31,5 +31,5 @@
 	/// <summary>
 	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
 	/// </summary>
-	protected override int BuildHash() => System.HashCode.Combine(scorer.MaxHeight, scorer.Instructions, health.PositionHealth);
+	protected override int BuildHash() => System.HashCode.Combine(scorer.MaxThisRun, scorer.Instructions, health.PositionHealth);
 }
